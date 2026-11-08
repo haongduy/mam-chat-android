@@ -50,6 +50,7 @@ fun anOnBoardingState(
     mustChooseAccountProvider: Boolean = false,
     canLoginWithQrCode: Boolean = false,
     canCreateAccount: Boolean = false,
+    canUseAnotherAccountProvider: Boolean = false,
     canReportBug: Boolean = false,
     version: String = "1.0.0",
     @DrawableRes
@@ -65,6 +66,7 @@ fun anOnBoardingState(
     mustChooseAccountProvider = mustChooseAccountProvider,
     canLoginWithQrCode = canLoginWithQrCode,
     canCreateAccount = canCreateAccount,
+    canUseAnotherAccountProvider = canUseAnotherAccountProvider,
     canReportBug = canReportBug,
     version = version,
     loginModeState = loginModeState,

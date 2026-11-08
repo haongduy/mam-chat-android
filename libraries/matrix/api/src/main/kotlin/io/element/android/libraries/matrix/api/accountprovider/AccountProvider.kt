@@ -71,3 +71,12 @@ sealed interface AccountProvider {
 val matrixOrgAccountProvider = AccountProvider.Generic(
     serverName = "matrix.org",
 )
+
+/**
+ * Default homeserver for this MÂM Chat fork.
+ * The bare server name is what the user sees; the client adds `https://` when connecting.
+ * User ids stay `@localpart:chat.mam.info.vn`.
+ */
+val mamChatAccountProvider = AccountProvider.Generic(
+    serverName = "chat.mam.info.vn",
+)

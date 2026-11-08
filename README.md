@@ -6,6 +6,16 @@
 [![Element X Android Matrix room #element-x-android:matrix.org](https://img.shields.io/matrix/element-x-android:matrix.org.svg?label=%23element-x-android:matrix.org&logo=matrix&server_fqdn=matrix.org)](https://matrix.to/#/#element-x-android:matrix.org)
 [![Localazy](https://img.shields.io/endpoint?url=https%3A%2F%2Fconnect.localazy.com%2Fstatus%2Felement%2Fdata%3Fcontent%3Dall%26title%3Dlocalazy%26logo%3Dtrue)](https://localazy.com/p/element)
 
+# MÂM Chat
+
+This repository is Duy's public fork of [Element X Android](https://github.com/element-hq/element-x-android), rebranded as **MÂM Chat** for the homeserver `https://chat.mam.info.vn`.
+
+It is not affiliated with Element. Upstream copyright, history, and the AGPL-3.0-or-commercial license are preserved. Build instructions, the chosen upstream base, and what is **not** configured (push, calls, QR / MAS login) are in [docs/mam-chat.md](docs/mam-chat.md).
+
+The sections below are the upstream Element X Android README.
+
+---
+
 # Element X Android
 
 Element X Android is the next-generation [Matrix](https://matrix.org/) client provided by [Element](https://element.io/).

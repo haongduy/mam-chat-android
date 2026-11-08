@@ -56,7 +56,7 @@ class ConfirmAccountProviderPresenterTest {
             val initialState = awaitItem()
             assertThat(initialState.isAccountCreation).isFalse()
             assertThat(initialState.submitEnabled).isTrue()
-            assertThat(initialState.accountProviderInput).isEqualTo("matrix.org")
+            assertThat(initialState.accountProviderInput).isEqualTo("chat.mam.info.vn")
             assertThat(initialState.loginModeState.loginMode).isEqualTo(AsyncData.Uninitialized)
         }
     }
@@ -405,15 +405,15 @@ class ConfirmAccountProviderPresenterTest {
     }
 
     @Test
-    fun `present - offers matrix_org without the scheme as an autocomplete suggestion`() = runTest {
+    fun `present - offers the mam homeserver without the scheme as an autocomplete suggestion`() = runTest {
         val presenter = createConfirmAccountProviderPresenter(
             appPreferencesStore = InMemoryAppPreferencesStore(homeserverHistory = emptyList()),
         )
         presenter.test {
             val initialState = awaitItem()
-            initialState.eventSink(ConfirmAccountProviderEvent.UserInputChanged("matr"))
-            val suggestionState = awaitState { it.accountProviderInput == "matr" }
-            assertThat(suggestionState.accountProviderSuggestion).isEqualTo("matrix.org")
+            initialState.eventSink(ConfirmAccountProviderEvent.UserInputChanged("chat"))
+            val suggestionState = awaitState { it.accountProviderInput == "chat" }
+            assertThat(suggestionState.accountProviderSuggestion).isEqualTo("chat.mam.info.vn")
         }
     }
 

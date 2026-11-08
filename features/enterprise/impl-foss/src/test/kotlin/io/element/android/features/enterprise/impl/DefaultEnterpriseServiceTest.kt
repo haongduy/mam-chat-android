@@ -10,7 +10,6 @@ package io.element.android.features.enterprise.impl
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import io.element.android.compound.colors.SemanticColorsLightDark
 import io.element.android.features.enterprise.api.BugReportUrl
 import io.element.android.libraries.androidutils.json.JsonProvider
 import io.element.android.libraries.core.uri.ensureProtocol
@@ -57,7 +56,12 @@ class DefaultEnterpriseServiceTest {
         val defaultEnterpriseService = createDefaultEnterpriseService()
         defaultEnterpriseService.semanticColorsFlow(null).test {
             val initialState = awaitItem()
-            assertThat(initialState).isEqualTo(SemanticColorsLightDark.default)
+            assertThat(initialState).isEqualTo(MamTheme.semanticColors)
+            assertThat(initialState.light.bgAccentRest).isEqualTo(androidx.compose.ui.graphics.Color(0xFFBE185D))
+            assertThat(initialState.light.bgAccentHovered).isEqualTo(androidx.compose.ui.graphics.Color(0xFF9D174D))
+            assertThat(initialState.light.bgAccentPressed).isEqualTo(androidx.compose.ui.graphics.Color(0xFF831843))
+            assertThat(initialState.light.bgAccentSubtle).isEqualTo(androidx.compose.ui.graphics.Color(0xFFFFF1F7))
+            assertThat(initialState.light.bgAccentSelected).isEqualTo(androidx.compose.ui.graphics.Color(0xFFFCE7F3))
             awaitComplete()
         }
     }
@@ -77,7 +81,7 @@ class DefaultEnterpriseServiceTest {
         val defaultEnterpriseService = createDefaultEnterpriseService()
         defaultEnterpriseService.semanticColorsFlow(A_SESSION_ID).test {
             val initialState = awaitItem()
-            assertThat(initialState).isEqualTo(SemanticColorsLightDark.default)
+            assertThat(initialState).isEqualTo(MamTheme.semanticColors)
             awaitComplete()
         }
     }

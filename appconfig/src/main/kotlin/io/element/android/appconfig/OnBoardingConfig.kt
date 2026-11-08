@@ -9,6 +9,16 @@
 package io.element.android.appconfig
 
 object OnBoardingConfig {
-    /** Whether the user can create an account using the app. */
-    const val CAN_CREATE_ACCOUNT = true
+    /**
+     * Public registration is disabled on chat.mam.info.vn. Accounts are provisioned out of band.
+     * The app must not offer in-app sign-up against that homeserver.
+     */
+    const val CAN_CREATE_ACCOUNT = false
+
+    /**
+     * QR sign-in in Element X depends on Matrix Authentication Service / OIDC.
+     * This homeserver is standalone Synapse with m.login.password only, so the QR entry point is hidden.
+     * Password login stays available.
+     */
+    const val CAN_LOGIN_WITH_QR_CODE = false
 }

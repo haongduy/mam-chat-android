@@ -1,0 +1,33 @@
+{
+  "name": "MÂM Pink",
+  "is_dark": false,
+  "colors": {
+    "accent-color": "#BE185D",
+    "primary-color": "#BE185D",
+    "sidebar-color": "#FFF1F7",
+    "roomlist-background-color": "#FFF1F7",
+    "roomlist-text-color": "#2A1520",
+    "roomlist-text-secondary-color": "#725565",
+    "roomlist-highlights-color": "#FCE7F3",
+    "roomlist-separator-color": "#FBCFE8",
+    "timeline-background-color": "#FFFFFF",
+    "timeline-text-color": "#2A1520",
+    "timeline-text-secondary-color": "#725565",
+    "timeline-highlights-color": "#FFF1F7"
+  },
+  "compound": {
+    "--cpd-color-bg-accent-rest": "#BE185D",
+    "--cpd-color-bg-accent-hovered": "#9D174D",
+    "--cpd-color-bg-accent-pressed": "#831843",
+    "--cpd-color-text-action-accent": "#BE185D",
+    "--cpd-color-icon-accent-primary": "#BE185D",
+    "--cpd-color-icon-accent-secondary": "#9D174D",
+    "--cpd-color-icon-accent-tertiary": "#BE185D",
+    "--cpd-color-bg-action-primary-rest": "#BE185D",
+    "--cpd-color-bg-action-primary-hovered": "#9D174D",
+    "--cpd-color-bg-action-primary-pressed": "#831843",
+    "--cpd-color-text-on-solid-primary": "#FFFFFF",
+    "--cpd-color-border-interactive-primary": "#BE185D",
+    "--cpd-color-border-interactive-hovered": "#9D174D"
+  }
+}

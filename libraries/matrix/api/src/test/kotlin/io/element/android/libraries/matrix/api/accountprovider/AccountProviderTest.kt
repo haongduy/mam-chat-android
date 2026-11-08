@@ -42,6 +42,12 @@ class AccountProviderTest {
     }
 
     @Test
+    fun `mamChatAccountProvider is the bare chat mam homeserver`() {
+        assertThat(mamChatAccountProvider.serverNameOrBaseUrl()).isEqualTo("chat.mam.info.vn")
+        assertThat(mamChatAccountProvider.friendlyServerName()).isEqualTo("chat.mam.info.vn")
+    }
+
+    @Test
     fun `serverNameOrBaseUrl trims, lowercases and drops the implicit https scheme and a trailing slash`() {
         assertThat(AccountProvider.Generic("  MATRIX.org ").serverNameOrBaseUrl()).isEqualTo("matrix.org")
         assertThat(AccountProvider.Generic("https://matrix.org").serverNameOrBaseUrl()).isEqualTo("matrix.org")

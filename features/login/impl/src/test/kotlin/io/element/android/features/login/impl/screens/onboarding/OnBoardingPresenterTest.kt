@@ -22,7 +22,7 @@ import io.element.android.features.login.impl.login.LoginModePresenter
 import io.element.android.libraries.architecture.AsyncData
 import io.element.android.libraries.core.meta.BuildMeta
 import io.element.android.libraries.matrix.api.accountprovider.AccountProvider
-import io.element.android.libraries.matrix.api.accountprovider.matrixOrgAccountProvider
+import io.element.android.libraries.matrix.api.accountprovider.mamChatAccountProvider
 import io.element.android.libraries.matrix.api.auth.MatrixAuthenticationService
 import io.element.android.libraries.matrix.test.AN_ACCOUNT_PROVIDER
 import io.element.android.libraries.matrix.test.AN_ACCOUNT_PROVIDER_2
@@ -75,6 +75,19 @@ class OnBoardingPresenterTest {
     }
 
     @Test
+    fun `present - mam chat homeserver is the default when nothing is configured`() = runTest {
+        val presenter = createPresenter()
+        presenter.test {
+            val initialState = awaitItem()
+            assertThat(initialState.defaultAccountProvider).isEqualTo(mamChatAccountProvider)
+            assertThat(initialState.canUseAnotherAccountProvider).isTrue()
+            assertThat(initialState.canCreateAccount).isFalse()
+            assertThat(initialState.canLoginWithQrCode).isFalse()
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
     fun `present - initial state`() = runTest {
         val buildMeta = aBuildMeta(
             applicationName = "A",
@@ -98,7 +111,7 @@ class OnBoardingPresenterTest {
             assertThat(initialState.canReportBug).isFalse()
             assertThat(initialState.isAddingAccount).isFalse()
             val finalState = awaitItem()
-            assertThat(finalState.canLoginWithQrCode).isTrue()
+            assertThat(finalState.canLoginWithQrCode).isFalse()
         }
     }
 
@@ -152,7 +165,8 @@ class OnBoardingPresenterTest {
             rageshakeFeatureAvailability = { flowOf(false) },
         )
         presenter.test {
-            skipItems(1)
+            // QR login no longer changes state after the first frame, and rageshake stays unavailable,
+            // so the initial item is already stable.
             awaitItem().also { state ->
                 assertThat(state.canReportBug).isFalse()
                 repeat(7) {
@@ -194,7 +208,7 @@ class OnBoardingPresenterTest {
             ),
         )
         presenter.test {
-            skipItems(3)
+            skipItems(2)
             awaitItem().also {
                 assertThat(it.defaultAccountProvider).isEqualTo(AccountProvider.Generic(ACCOUNT_PROVIDER_FROM_LINK))
                 assertThat(it.canLoginWithQrCode).isFalse()
@@ -226,7 +240,7 @@ class OnBoardingPresenterTest {
             skipItems(1)
             awaitItem().also {
                 assertThat(it.defaultAccountProvider).isNull()
-                assertThat(it.canLoginWithQrCode).isTrue()
+                assertThat(it.canLoginWithQrCode).isFalse()
                 assertThat(it.canCreateAccount).isFalse()
             }
         }
@@ -249,7 +263,7 @@ class OnBoardingPresenterTest {
             skipItems(1)
             awaitItem().also {
                 assertThat(it.defaultAccountProvider).isEqualTo(anAccountProviderManaged(serverName = ACCOUNT_PROVIDER_FROM_CONFIG))
-                assertThat(it.canLoginWithQrCode).isTrue()
+                assertThat(it.canLoginWithQrCode).isFalse()
                 assertThat(it.canCreateAccount).isFalse()
             }
         }
@@ -319,10 +333,10 @@ class OnBoardingPresenterTest {
             accountProviderDataSource = accountProviderDataSource,
         )
         presenter.test {
-            skipItems(3)
+            skipItems(2)
             awaitItem().also {
                 assertThat(it.defaultAccountProvider).isEqualTo(AccountProvider.Generic(A_HOMESERVER_URL))
-                assertThat(accountProviderDataSource.flow.first()).isEqualTo(matrixOrgAccountProvider)
+                assertThat(accountProviderDataSource.flow.first()).isEqualTo(mamChatAccountProvider)
                 it.eventSink(OnBoardingEvent.OnSignIn(AccountProvider.Generic(A_HOMESERVER_URL_2)))
                 skipItems(1) // Loading
                 // Account data source has been updated

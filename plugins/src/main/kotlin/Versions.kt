@@ -55,7 +55,13 @@ object Versions {
      * See comment above for the calculation method.
      */
     const val VERSION_CODE = (2000 + versionYear) * 10_000 + versionMonth * 100 + versionReleaseNumber
-    val VERSION_NAME = "$versionYear.${versionMonth.toString().padStart(2, '0')}.$versionReleaseNumber"
+
+    /**
+     * Fork revision appended to the upstream version name so a MÂM Chat build is not mistaken
+     * for official Element X 26.11.0. The numeric version code stays on the upstream CalVer scheme.
+     */
+    private const val forkRevision = 1
+    val VERSION_NAME = "$versionYear.${versionMonth.toString().padStart(2, '0')}.$versionReleaseNumber-mam.$forkRevision"
 
     /**
      * Compile SDK version. Must be updated when a new Android version is released.
