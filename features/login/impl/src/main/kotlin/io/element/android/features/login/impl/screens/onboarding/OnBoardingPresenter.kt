@@ -31,6 +31,7 @@ import io.element.android.libraries.architecture.Presenter
 import io.element.android.libraries.core.meta.BuildMeta
 import io.element.android.libraries.core.meta.BuildType
 import io.element.android.libraries.matrix.api.accountprovider.AccountProvider
+import io.element.android.libraries.matrix.api.accountprovider.mamChatAccountProvider
 import io.element.android.libraries.sessionstorage.api.SessionStore
 import io.element.android.libraries.ui.utils.MultipleTapToUnlock
 import kotlinx.coroutines.launch
@@ -73,6 +74,9 @@ class OnBoardingPresenter(
                 enterpriseService.accountProviderAllowList().singleOrNull()
             }
         }
+        // Stock MÂM Chat build: no MDM allow-list, so onboarding signs in to chat.mam.info.vn.
+        // A configured allow-list keeps the upstream enterprise behaviour.
+        val useBrandedDefault = canConnectToAnyAccountProvider && enterpriseService.accountProviderAllowList().isEmpty()
         val mustChooseAccountProvider = remember {
             !canConnectToAnyAccountProvider && enterpriseService.accountProviderAllowList().size > 1
         }
@@ -91,12 +95,13 @@ class OnBoardingPresenter(
                 }
         }
         val defaultAccountProvider = remember(linkAccountProvider) {
-            // If there is a forced account provider, this is the default account provider
-            // Else use the account provider passed in the params if any and if allowed
-            forcedAccountProvider ?: linkAccountProvider
+            // If there is a forced account provider, this is the default account provider.
+            // Else use the account provider passed in the params if any and if allowed.
+            // Otherwise the MÂM Chat homeserver, so the first screen offers "Sign in to chat.mam.info.vn".
+            forcedAccountProvider ?: linkAccountProvider ?: mamChatAccountProvider.takeIf { useBrandedDefault }
         }
         val canLoginWithQrCode by produceState(initialValue = false, linkAccountProvider) {
-            value = linkAccountProvider == null
+            value = OnBoardingConfig.CAN_LOGIN_WITH_QR_CODE && linkAccountProvider == null
         }
         val canReportBug by remember { rageshakeFeatureAvailability.isAvailable() }.collectAsState(false)
         var showReportBug by rememberSaveable { mutableStateOf(false) }
@@ -144,6 +149,7 @@ class OnBoardingPresenter(
             mustChooseAccountProvider = mustChooseAccountProvider,
             canLoginWithQrCode = canLoginWithQrCode,
             canCreateAccount = defaultAccountProvider == null && canConnectToAnyAccountProvider && OnBoardingConfig.CAN_CREATE_ACCOUNT,
+            canUseAnotherAccountProvider = useBrandedDefault && forcedAccountProvider == null,
             canReportBug = canReportBug && showReportBug,
             loginModeState = loginModeState,
             version = buildMeta.versionName,

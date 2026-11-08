@@ -27,6 +27,7 @@ object NotificationConfig {
      */
     const val SHOW_QUICK_REPLY_ACTION = true
 
+    /** MÂM pink primary. Status-bar notification accent only; the launcher logo stays blue/white. */
     @ColorInt
-    val NOTIFICATION_ACCENT_COLOR: Int = "#FF0DBD8B".toColorInt()
+    val NOTIFICATION_ACCENT_COLOR: Int = "#FFBE185D".toColorInt()
 }

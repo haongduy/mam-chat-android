@@ -22,6 +22,7 @@ data class OnBoardingState(
     val mustChooseAccountProvider: Boolean,
     val canLoginWithQrCode: Boolean,
     val canCreateAccount: Boolean,
+    val canUseAnotherAccountProvider: Boolean,
     val canReportBug: Boolean,
     val version: String,
     @DrawableRes

@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -134,18 +135,12 @@ private fun AddFirstAccountScaffold(
 ) {
     OnBoardingPage(
         modifier = modifier,
-        renderBackground = state.onBoardingLogoResId == null,
+        renderBackground = true,
         content = {
             Box(
                 modifier = Modifier.fillMaxSize(),
             ) {
-                if (state.onBoardingLogoResId != null) {
-                    OnBoardingLogo(
-                        onBoardingLogoResId = state.onBoardingLogoResId,
-                    )
-                } else {
-                    OnBoardingContent(state = state)
-                }
+                OnBoardingContent(state = state)
                 if (state.showDeveloperSettings) {
                     IconButton(
                         onClick = onDeveloperSettingsClick,
@@ -213,10 +208,18 @@ private fun OnBoardingContent(state: OnBoardingState) {
                 verticalBias = -0.4f
             )
         ) {
-            ElementLogoAtom(
-                size = ElementLogoAtomSize.Large,
-                modifier = Modifier.padding(top = ElementLogoAtomSize.Large.shadowRadius / 2)
-            )
+            if (state.onBoardingLogoResId != null) {
+                Image(
+                    painter = painterResource(id = state.onBoardingLogoResId),
+                    contentDescription = null,
+                    modifier = Modifier.size(176.dp),
+                )
+            } else {
+                ElementLogoAtom(
+                    size = ElementLogoAtomSize.Large,
+                    modifier = Modifier.padding(top = ElementLogoAtomSize.Large.shadowRadius / 2)
+                )
+            }
         }
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -245,24 +248,6 @@ private fun OnBoardingContent(state: OnBoardingState) {
                 )
             }
         }
-    }
-}
-
-@Composable
-private fun OnBoardingLogo(
-    onBoardingLogoResId: Int,
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        contentAlignment = Alignment.Center,
-    ) {
-        Image(
-            painter = painterResource(id = onBoardingLogoResId),
-            contentDescription = null
-        )
     }
 }
 
@@ -316,6 +301,13 @@ private fun OnBoardingButtons(
                 modifier = Modifier
                     .fillMaxWidth()
             )
+            if (state.canUseAnotherAccountProvider) {
+                TextButton(
+                    text = stringResource(id = R.string.screen_change_account_provider_title),
+                    onClick = { onSignIn(false) },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
         }
         if (state.canCreateAccount) {
             TextButton(

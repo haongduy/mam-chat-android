@@ -33,6 +33,6 @@
   <string name="screen_onboarding_sign_up">"Kurti paskyrą"</string>
   <string name="screen_onboarding_welcome_back">"Sveiki sugrįžę"</string>
   <string name="screen_onboarding_welcome_message">"Sveiki atvykę į sparčiausią „%1$s“ kada nors. Pagerintas spartai ir paprastumui."</string>
-  <string name="screen_onboarding_welcome_title">"Būkite savo stichijoje"</string>
+  <string name="screen_onboarding_welcome_title">"MÂM Chat"</string>
   <string name="screen_server_confirmation_message_login_matrix_dot_org">"Matrix yra atviras tinklas, skirtas saugiam, decentralizuotam bendravimui."</string>
 </resources>

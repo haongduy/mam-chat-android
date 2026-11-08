@@ -64,7 +64,7 @@ class DefaultEnterpriseService(
     }
 
     override fun semanticColorsFlow(sessionId: SessionId?): Flow<SemanticColorsLightDark> {
-        return flowOf(SemanticColorsLightDark.default)
+        return flowOf(MamTheme.semanticColors)
     }
 
     override fun firebasePushGateway(): String? = null
